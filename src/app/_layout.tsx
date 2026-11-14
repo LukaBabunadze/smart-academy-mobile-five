@@ -1,18 +1,34 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
+import AppTitle from "@/components/appTitle/AppTitle";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Stack, useRouter } from "expo-router";
+import { useEffect, useState } from "react";
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
+export default function RootLayout() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
 
-SplashScreen.preventAutoHideAsync();
+  const checkUser = async () => {
+    try {
+      const token = await AsyncStorage.getItem("token");
+      if (token) {
+        router.replace("/(tabs)");
+      } else {
+        router.replace("/(auth)");
+      }
+    } catch (error) {
+      console.error("Error checking user:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-  return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
-    </ThemeProvider>
-  );
+  useEffect(() => {
+    checkUser();
+  }, []);
+
+  if (loading) {
+    return <AppTitle title="Loading..." />;
+  }
+
+  return <Stack screenOptions={{ headerShown: false }} />;
 }
