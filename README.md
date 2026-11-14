@@ -1,56 +1,125 @@
-# Welcome to your Expo app 👋
+# Smart Academy Mobile
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Smart Academy Mobile is a cross-platform shopping app built with Expo and React Native. It demonstrates a product marketplace flow with authentication, product browsing, product details, cart data, and a user profile.
 
-## Get started
+The app uses public demo APIs for product, cart, authentication, and profile data. It is intended for learning and prototyping rather than production use.
 
-1. Install dependencies
+## Features
 
-   ```bash
-   npm install
-   ```
+- Login flow backed by the Fake Store API
+- File-based navigation with Expo Router
+- Product listing with loading skeletons
+- Product details screen with image, price, rating, and description
+- Cart screen with product details, quantities, line totals, and cart total
+- Profile screen with contact, address, location, and company information
+- Reusable loading skeleton components
+- iOS, Android, and web support through Expo
+- Persistent login token storage with AsyncStorage
 
-2. Start the app
+## Tech stack
 
-   ```bash
-   npx expo start
-   ```
+### Core
 
-In the output, you'll find options to open the app in a
+- [Expo SDK 58](https://docs.expo.dev/versions/v58.0.0/)
+- [React 19](https://react.dev/)
+- [React Native 0.88](https://reactnative.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Expo Router](https://docs.expo.dev/router/introduction/)
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### Expo and React Native packages
 
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- `expo-image` for product images
+- `@react-native-async-storage/async-storage` for local token persistence
+- `@expo/vector-icons` for tab icons
+- `react-native-safe-area-context` and `react-native-screens`
+- `react-native-gesture-handler`
+- `react-native-reanimated`
 
-## Get a fresh project
+### Development tools
 
-When you're ready, run:
+- ESLint with `eslint-config-expo`
+- Expo CLI
+- TypeScript compiler
 
-```bash
-npm run reset-project
+## Data sources
+
+The app currently uses these demo endpoints:
+
+- [Fake Store API](https://fakestoreapi.com/)
+  - `POST /auth/login` for login
+  - `GET /products` for the marketplace
+  - `GET /products/:id` for product details
+  - `GET /carts/1` for cart contents
+- [JSONPlaceholder](https://jsonplaceholder.typicode.com/)
+  - `GET /users/1` for profile data
+
+## Project structure
+
+```text
+src/
+├── app/
+│   ├── (auth)/              # Login and registration routes
+│   ├── (tabs)/              # Products, cart, and profile tabs
+│   └── details/[id]/        # Product details route
+├── components/              # Reusable UI components
+├── skeletons/               # Loading placeholders for app screens
+└── types/                   # Shared Product, Cart, and User types
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+## Getting started
 
-### Other setup steps
+### Requirements
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+- Node.js 18 or newer
+- npm
+- Expo Go, an Android emulator, or an iOS simulator
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Start the development server
+
+```bash
+npx expo start
+```
+
+From the Expo CLI, choose one of the following:
+
+- Press `a` to open Android
+- Press `i` to open iOS
+- Press `w` to open the web app
+- Scan the QR code with Expo Go
+
+## Available scripts
+
+| Command | Description |
+| --- | --- |
+| `npm start` | Start the Expo development server |
+| `npm run android` | Start the app for Android |
+| `npm run ios` | Start the app for iOS |
+| `npm run web` | Start the web version |
+| `npm run lint` | Run Expo ESLint checks |
+| `npm run reset-project` | Move starter files to `example/` and reset the app directory |
+
+## Authentication demo
+
+The login screen sends credentials to the Fake Store API and stores the returned token in AsyncStorage. The root layout checks for that token and routes authenticated users to the tab navigator.
+
+The password field has a demo default value from the sample implementation. Replace the demo authentication flow with a secure backend before using this project in production.
+
+## Development notes
+
+- Routes are defined under `src/app` using Expo Router conventions.
+- Native `ios/` and `android/` directories are not checked in; Expo manages native configuration through `app.json`.
+- API requests currently use public demo services and do not include production error handling or offline persistence.
+- Registration is currently a UI placeholder and does not create an account.
 
 ## Learn more
 
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- [Expo documentation](https://docs.expo.dev/)
+- [Expo Router documentation](https://docs.expo.dev/router/introduction/)
+- [React Native documentation](https://reactnative.dev/docs/getting-started)
+- [TypeScript documentation](https://www.typescriptlang.org/docs/)
