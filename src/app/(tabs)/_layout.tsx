@@ -51,6 +51,16 @@ const _layout = () => {
           ),
         }}
       />
+       <Tabs.Screen
+        name="polygon"
+        options={{
+          title: "Polygon",
+          tabBarLabel: "პოლიგონი",
+          tabBarIcon: ({ color, focused }: TabBarIconProps) => (
+            <Feather name="user" size={focused ? 24 : 20} color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 };
